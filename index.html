@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" v="1.1.3">
 
 
@@ -103,6 +103,46 @@
         .adsbygoogle[data-ad-status=unfilled] {
             display: none !important
         }
+
+        .ad-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+        .ad-popup-overlay.show { display: flex; }
+        .ad-popup-box {
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .ad-popup-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #333;
+            color: #fff;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        .ad-popup-close:hover { background: #555; }
 
         .game-list li a,
         .game-list-warp .game-link {
@@ -525,11 +565,25 @@
 </head>
 
 <body>
-    <div id="div-gpt-ad-1771940172837-0"></div>
+    <div class="ad-popup-overlay" id="adPopupOverlay">
+        <div class="ad-popup-box">
+            <button class="ad-popup-close" id="adPopupClose" aria-label="Close">×</button>
+            <div id="div-gpt-ad-1771940172837-0"></div>
+        </div>
+    </div>
     <script>
       googletag.cmd.push(function() {
         googletag.display('div-gpt-ad-1771940172837-0');
       });
+      (function() {
+        var overlay = document.getElementById('adPopupOverlay');
+        var closeBtn = document.getElementById('adPopupClose');
+        function showPopup() { overlay.classList.add('show'); }
+        function hidePopup() { overlay.classList.remove('show'); }
+        setTimeout(showPopup, 1500);
+        closeBtn.onclick = hidePopup;
+        overlay.onclick = function(e) { if (e.target === overlay) hidePopup(); };
+      })();
     </script>
 
     <main class="index-content">
